@@ -1,31 +1,25 @@
 {
-   "sources":[
-      {
-         "baseUrl":"",
-         "catalogEndpoint":{
-            "url":"",
-            "queryParams":[
-               {
-                  "remote":"local"
-               }
-            ]
-         },
-         "itemEndpoint":{
-            "url":"",
-            "queryParams":[
-               {
-                  "remote":"local"
-               }
-            ]
-         },
-         "infoEndpoint":{
-            "url":"",
-            "queryParams":[
-               {
-                  "remote":"local"
-               }
-            ]
-         }
-      }
-   ]
+    "sources": [
+        {
+            "baseUrl": "",
+            "catalogEndpoint": {
+                "url": "",
+                "queryParams": {
+                    "remote": "local"
+                }
+            },
+            "itemEndpoint": {
+                "url": "",
+                "queryParams": {
+                    "remote": "local"
+                }
+            },
+            "infoEndpoint": {
+                "url": "",
+                "queryParams": {
+                    "remote": "local"
+                }
+            }
+        }
+    ]
 }
