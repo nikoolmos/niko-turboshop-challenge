@@ -2,7 +2,9 @@
 
 # dependencies
 niko-turbo-challenge-be/node_modules/
+niko-turbo-challenge-be/dist/
 niko-turboshop-challenge-fe/node_modules/
+niko-turboshop-challenge-fe/.next/
 
 /node_modules
 /.pnp
