@@ -17,11 +17,11 @@ export class PartDataSource {
         this.infoEndpoint = infoEndpoint;
     }
 
-    public getCatalog(page: string, limit: string|) {
+    public async getCatalog(page: string, limit: string) {
 
     }
 
-    public getItem(sku: string) {}
+    public async getItem(sku: string) {}
 
-    public getInfo() {}
+    public async getInfo() {}
 }
