@@ -1,24 +1,66 @@
 {
     "sources": [
         {
-            "baseUrl": "",
+            "partProviderName": "AUTO_PARTS_PLUS",
+            "baseUrl": "https://web-production-84144.up.railway.app",
             "catalogEndpoint": {
-                "url": "",
+                "url": "/api/autopartsplus/catalog",
                 "queryParams": {
-                    "remote": "local"
+                    "page": "page",
+                    "limit": "limit"
                 }
             },
             "itemEndpoint": {
-                "url": "",
+                "url": "/api/autopartsplus/parts",
                 "queryParams": {
-                    "remote": "local"
+                    "sku": "sku"
                 }
             },
             "infoEndpoint": {
-                "url": "",
+                "url": "/api/autopartsplus/status",
+                "queryParams": {}
+            }
+        },
+        {
+            "partProviderName": "REPUESTOS_MAX",
+            "baseUrl": "https://web-production-84144.up.railway.app",
+            "catalogEndpoint": {
+                "url": "/api/repuestosmax/catalogo",
                 "queryParams": {
-                    "remote": "local"
+                    "pagina": "page",
+                    "limite": "limit"
                 }
+            },
+            "itemEndpoint": {
+                "url": "/api/repuestosmax/productos",
+                "queryParams": {
+                    "codigo": "sku"
+                }
+            },
+            "infoEndpoint": {
+                "url": "/api/repuestosmax/info",
+                "queryParams": {}
+            }
+        },
+        {
+            "partProviderName": "GLOBAL_PARTS",
+            "baseUrl": "https://web-production-84144.up.railway.app",
+            "catalogEndpoint": {
+                "url": "/api/globalparts/inventory/catalog",
+                "queryParams": {
+                    "page": "page",
+                    "itemsPerPage": "limit"
+                }
+            },
+            "itemEndpoint": {
+                "url": "/api/globalparts/inventory/search",
+                "queryParams": {
+                    "partNumber": "partNumber"
+                }
+            },
+            "infoEndpoint": {
+                "url": "/api/globalparts/inventory/metadata",
+                "queryParams": {}
             }
         }
     ]
