@@ -173,6 +173,9 @@ export class RepuestosMaxPartDataNormalizer implements PartDataNormalizer<Repues
                 price: part.precio.valor,
                 qty: part.inventario.cantidad,
                 sku: part.identificacion.sku,
+                brand: part.informacionBasica.marca.nombre,
+                year: part.compatibilidad.vehiculos.map(vehicle => ({from: vehicle.anios.desde.toString(), upTo: vehicle.anios.hasta.toString()})),
+                model: part.compatibilidad.vehiculos.map(vehicle => vehicle.modelo),
             });
         }
 

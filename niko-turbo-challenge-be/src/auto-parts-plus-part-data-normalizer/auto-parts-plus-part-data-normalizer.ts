@@ -45,6 +45,7 @@ export class AutoPartsPlusPartDataNormalizer implements PartDataNormalizer<AutoP
         const partsList: Part[] = [];
 
         for (const part of catalogData.parts) {
+            const modelsAndYears = this.extractModelsAndYears(part);
             partsList.push({
                 id: part.oem_code,
                 description: part.desc,
@@ -53,10 +54,38 @@ export class AutoPartsPlusPartDataNormalizer implements PartDataNormalizer<AutoP
                 providers: ['AutoPartsPlus'],
                 qty: part.qty_available,
                 sku: part.sku,
-                title: part.title
+                title: part.title,
+                brand: part.brand_name,
+                year: modelsAndYears.years,
+                model: modelsAndYears.models,
             });
         }
 
         return partsList;
+    }
+
+
+    private extractModelsAndYears(part: AutoPartsPlusCatalogItem) {
+        const listofVehicles = part.fits_vehicles;
+        const yearsRegex = /\d{4}-\d{4}/;
+        const models: string[] = [];
+        const years: { from: string, upTo: string }[] = [];
+
+        for (const stringToParse of listofVehicles) {
+            const chunks = stringToParse.split(yearsRegex)
+            models.push(chunks[0]);
+
+            const yearsChunk = yearsRegex.exec(stringToParse)!;
+
+            const [from, upTo] = yearsChunk[0].split('-');
+
+            years.push({ from, upTo });
+        }
+
+        return {
+            models,
+            years,
+        };
+
     }
 }

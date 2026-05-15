@@ -7,4 +7,10 @@ export interface Part {
     price: number;
     picture: string[];
     providers: string[];
+    model: string[];
+    year: Array<{
+        from: string,
+        upTo: string;
+    }>;
+    brand: string;
 }

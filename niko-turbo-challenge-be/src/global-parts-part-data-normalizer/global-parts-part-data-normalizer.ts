@@ -353,8 +353,11 @@ export class GlobalPartsPartDataNormalizer implements PartDataNormalizer<GlobalP
                 picture: [part.MediaAssets.Images[0].ImageUrl],
                 price: part.PricingInfo.ListPrice.Amount,
                 providers: [PartProviders.GLOBAL_PARTS],
-                qty: part.AvailabilityInfo.QuantityInfo.AvailableQuantity
-            })
+                qty: part.AvailabilityInfo.QuantityInfo.AvailableQuantity,
+                brand: part.ProductDetails.BrandInfo.BrandName,
+                year: part.VehicleCompatibility.CompatibleVehicles.map(vehicle => ({from: vehicle.YearRange.StartYear.toString(), upTo: vehicle.YearRange.EndYear.toString()})),
+                model: part.VehicleCompatibility.CompatibleVehicles.map(vehicle => vehicle.Model.Name),
+            });
         }
 
         return partList;
