@@ -2,11 +2,11 @@
 
 import { useEffect, useMemo } from "react";
 import { getCatalog } from "../../db/db";
-import { Part } from "../useCatalog/useCatalog";
+import { Part } from "../../interfaces/part";
 
 interface UseCatalogFilterConfig {
-    brand: string;
-    model: string;
+    brand: string[];
+    model: string[];
     year: string;
     searchTerm: string | undefined;
     catalog: Part[] | undefined;
@@ -35,11 +35,17 @@ export default function useCatalogFilter(config: UseCatalogFilterConfig) {
 
 
     const filteredParts = useMemo(() => {
+        const isSearchByTermFilterActive = config.searchTerm && config.searchTerm !== '';
+        const isBrandFilterActive = config.brand.length >0;
         return config?.catalog?.filter((item: Part) => {
             let result = false;
 
+
+            if(isSearchByTermFilterActive && isBrandFilterActive && config.searchTerm) {
+                return item.title.toLowerCase().includes(config.searchTerm.toLowerCase())
+            }
+
             if (config.searchTerm && config.searchTerm !== '') {
-                result = item.title.toLowerCase().includes(config.searchTerm.toLowerCase())
             } else {
                 result = true;
             }
@@ -52,9 +58,11 @@ export default function useCatalogFilter(config: UseCatalogFilterConfig) {
             //     result = result && item.title.toLowerCase().includes(config.year.toLowerCase())
             // }
 
-            // if (config.brand !== '') {
-            //     result = result && item.title.toLowerCase().includes(config.brand.toLowerCase())
-            // }
+            if (config.brand.length > 0) {
+                result = result && config.brand.includes(item.title.toLocaleLowerCase())
+            } else {
+                result = true;
+            }
 
             return result;
 

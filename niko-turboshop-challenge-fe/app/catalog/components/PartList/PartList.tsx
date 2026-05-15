@@ -1,4 +1,4 @@
-import { Part } from "../../hooks/useCatalog/useCatalog";
+import { Part } from "../../interfaces/part";
 import { PartListItem } from "../PartListItem/PartListItem";
 
 interface PartListProps {
@@ -8,7 +8,7 @@ interface PartListProps {
 const styles: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '20px 120px',
+    marginTop: '20px',
     flexDirection: 'column'
 }
 export function PartList(props: PartListProps) {

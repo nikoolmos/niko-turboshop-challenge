@@ -1,6 +1,7 @@
 "use client";
 
 import CatalogUI from "./components/CatalogUI/CatalogUI";
+import Navbar from "./components/Navbar/Narbar";
 import useCatalog from "./hooks/useCatalog/useCatalog";
 
 export default function Catalog() {
@@ -8,7 +9,7 @@ export default function Catalog() {
 
     return (
         <div>
-            <h1>HOLA MUNDO</h1>
+            <Navbar />
             <CatalogUI catalog={catalog} />
         </div>
     )

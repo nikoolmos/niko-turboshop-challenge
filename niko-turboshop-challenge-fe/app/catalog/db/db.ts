@@ -1,5 +1,7 @@
 "use client";
 
+import { Part } from "../interfaces/part";
+
 const DB_NAME = 'niko-turboshop-challenge-db';
 const DB_VERSION = 1;
 

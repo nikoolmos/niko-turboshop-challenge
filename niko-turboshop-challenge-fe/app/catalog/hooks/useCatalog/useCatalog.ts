@@ -2,23 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { getCatalog } from "../../db/db";
-
-export interface Part {
-    id: string;
-    title: string;
-    description: string;
-    sku: string;
-    qty: number;
-    price: number;
-    picture: string[];
-    providers: string[];
-    model: string[];
-    year: Array<{
-        from: string,
-        upTo: string;
-    }>;
-    brand: string;
-}
+import { Part } from "../../interfaces/part";
 
 export default function useCatalog() {
     const workerRef = useRef<Worker | null>(null);

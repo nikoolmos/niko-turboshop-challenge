@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import EmptyState from '../../emptyState/emptyState';
-import { Part } from '../../hooks/useCatalog/useCatalog';
+import { Part } from '../../interfaces/part';
 import { Filter } from '../Filters/Filters';
 import { PartList } from '../PartList/PartList';
 import { SearchInput } from '../SearchInput/SearchInput';
@@ -21,8 +21,8 @@ export default function CatalogUI(props: CatalogUIProps) {
     const [searchTerm, setSearchTerm] = useState<string | undefined>();
     const {filterOptions, filteredParts} = useCatalogFilter({
         searchTerm,
-        brand: '',
-        model: '',
+        brand: [],
+        model: [],
         year: '',
         catalog: props.catalog
     });
