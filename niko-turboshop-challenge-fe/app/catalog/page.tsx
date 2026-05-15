@@ -1,12 +1,15 @@
 "use client";
 
-
-import useCatalog from "./hooks/useCatalog/useCatalog"
+import CatalogUI from "./components/CatalogUI/CatalogUI";
+import useCatalog from "./hooks/useCatalog/useCatalog";
 
 export default function Catalog() {
-    useCatalog();
+    const { catalog } = useCatalog();
 
     return (
-        <h1>HOLA MUNDO</h1>
+        <div>
+            <h1>HOLA MUNDO</h1>
+            <CatalogUI catalog={catalog} />
+        </div>
     )
 }
