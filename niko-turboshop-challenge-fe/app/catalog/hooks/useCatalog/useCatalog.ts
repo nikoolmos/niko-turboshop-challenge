@@ -1,74 +1,105 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const DB_NAME = 'niko-turboshop-challenge-db';
+const DB_VERSION = 1;
+
+export interface Part {
+    id: string;
+    title: string;
+    description: string;
+    sku: string;
+    qty: number;
+    price: number;
+    picture: string[];
+    providers: string[];
+}
+
+const openDB = (): Promise<IDBDatabase> => {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+        // This handles schema changes (runs first time or version change)
+        request.onupgradeneeded = (event) => {
+            const db = (event.target as IDBOpenDBRequest).result;
+            if (!db.objectStoreNames.contains('parts')) {
+                db.createObjectStore('parts', { keyPath: 'id' });
+            }
+        };
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+};
+
+
+const getCatalog = async () => {
+    const db = await openDB();
+    const transaction = db.transaction('parts', 'readonly');
+    const store = transaction.objectStore('parts');
+
+    const request = store.getAll();
+
+    return new Promise<Part[]>((resolve, reject) => {
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+};
 
 export default function useCatalog() {
     const workerRef = useRef<Worker | null>(null);
     const requesterRef = useRef<Worker | null>(null);
     const reconcilerRef = useRef<Worker | null>(null);
 
+    const [catalog, setCatalog] = useState<Part[]>();
+
     useEffect(() => {
-        // 1. Initialize the worker using a relative path and import.meta.url
         workerRef.current = new Worker(
             new URL("../../workers/scheduler.ts", import.meta.url)
         );
 
-        // 2. Listen for messages from the worker
         workerRef.current.onmessage = (event: MessageEvent<number>) => {
-           requesterRef.current?.postMessage({
+            requesterRef.current?.postMessage({
                 type: 'TRIGGER_CATALOG_REQUEST'
-        })
+            })
         };
 
-        workerRef.current?.postMessage(10); // Send data to worker
-
-        // 3. Cleanup: Terminate worker when component unmounts
-        return () => {
-            workerRef.current?.terminate();
-        };
-    }, []);
-
-    useEffect(() => {
-        // 1. Initialize the worker using a relative path and import.meta.url
         requesterRef.current = new Worker(
             new URL("../../workers/requester.ts", import.meta.url)
         );
 
-        // 2. Listen for messages from the worker
         requesterRef.current.onmessage = (event: MessageEvent<any>) => {
+            console.log('requester hs sent a message')
             reconcilerRef.current?.postMessage({
                 type: 'RECONCILE_PART_DATA',
-                payload:  event.data.payload
+                payload: event.data.payload
             })
         };
 
-        requesterRef.current?.postMessage(10); // Send data to worker
-
-        // 3. Cleanup: Terminate worker when component unmounts
-        return () => {
-            requesterRef.current?.terminate();
-        };
-    }, []);
-
-     useEffect(() => {
         reconcilerRef.current = new Worker(
             new URL("../../workers/reconciler.ts", import.meta.url)
         );
 
-        reconcilerRef.current.onmessage = (event: MessageEvent<number>) => {
-            console.log("Worker said:", event.data);
+        reconcilerRef.current.onmessage = (event: MessageEvent<any>) => {
+            console.log("Reconciler Worker said:", event.data);
+            getCatalog().then((parts: Part[]) => {
+                console.log('use catalog', parts);
+                setCatalog(parts);
+            });
         };
+
+        workerRef.current.postMessage({ type: '' });
 
         return () => {
+            workerRef.current?.terminate();
+            requesterRef.current?.terminate();
             reconcilerRef.current?.terminate();
         };
+        
     }, []);
 
-    const handleWork = () => {
-        requesterRef.current?.postMessage(10); // Send data to worker
-    };
-
     return {
-        handleWork
+        catalog
     };
 }
