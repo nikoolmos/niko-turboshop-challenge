@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useMemo } from "react";
+import { getCatalog } from "../../db/db";
 import { Part } from "../useCatalog/useCatalog";
 
 interface UseCatalogFilterConfig {
@@ -9,34 +13,56 @@ interface UseCatalogFilterConfig {
 }
 
 export default function useCatalogFilter(config: UseCatalogFilterConfig) {
-    if(!config.catalog) {
-        return undefined;
-    }
-    
-    const filteredParts = config.catalog.filter((item: Part) => {
-        let result = false;
-
-        if (config.searchTerm && config.searchTerm !== '')  {
-            result = item.title.toLowerCase().includes(config.searchTerm.toLowerCase())
-        } else {
-            result = true;
+    const filterOptions = useMemo(() => {
+        if (!config.catalog) {
+            return undefined;
         }
 
-        // if (config.model !== '') {
-        //     result = result && item.title.toLowerCase().includes(config.model.toLowerCase())
-        // }
+        const models = new Set<string>();
+        const brands = new Set<string>();
 
-        // if (config.year !== '') {
-        //     result = result && item.title.toLowerCase().includes(config.year.toLowerCase())
-        // }
+        config.catalog.forEach((part: Part) => {
+            part.model?.forEach(model => models.add(model));
+            brands.add(part.brand);
+        });
 
-        // if (config.brand !== '') {
-        //     result = result && item.title.toLowerCase().includes(config.brand.toLowerCase())
-        // }
+        return {
+            models: Array.from(models),
+            brands: Array.from(brands)
+        };
 
-        return result;
+    }, [config.catalog]);
 
-    });
 
-    return filteredParts;
+    const filteredParts = useMemo(() => {
+        return config?.catalog?.filter((item: Part) => {
+            let result = false;
+
+            if (config.searchTerm && config.searchTerm !== '') {
+                result = item.title.toLowerCase().includes(config.searchTerm.toLowerCase())
+            } else {
+                result = true;
+            }
+
+            // if (config.model !== '') {
+            //     result = result && item.title.toLowerCase().includes(config.model.toLowerCase())
+            // }
+
+            // if (config.year !== '') {
+            //     result = result && item.title.toLowerCase().includes(config.year.toLowerCase())
+            // }
+
+            // if (config.brand !== '') {
+            //     result = result && item.title.toLowerCase().includes(config.brand.toLowerCase())
+            // }
+
+            return result;
+
+        });
+    }, [config]);
+
+    return {
+        filteredParts,
+        filterOptions,
+    };
 }

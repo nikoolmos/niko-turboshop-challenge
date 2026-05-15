@@ -1,35 +1,12 @@
 import React, { useState } from 'react';
 
-//   return (
-//     <div style={styles.container}>
-//       <h2>Product Search</h2>
 
-//       {/* Search Input */}
-//       <input
-//         type="text"
-//         placeholder="Search fruits..."
-//         value={searchTerm}
-//         onChange={(e) => setSearchTerm(e.target.value)}
-//         style={styles.input}
-//       />
-
-//       {/* Results List */}
-//       <ul style={styles.list}>
-//         {filteredItems.length > 0 ? (
-//           filteredItems.map((item, index) => (
-//             <li key={index} style={styles.listItem}>
-//               {item}
-//             </li>
-//           ))
-//         ) : (
-//           <li style={styles.noResults}>No matches found</li>
-//         )}
-//       </ul>
-//     </div>
-//   );
-// };
-
-
+export interface FilterProps {
+    options: {
+        models: string[],
+        brands: string[],
+    };
+}
 const styles: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -42,24 +19,48 @@ const styles: React.CSSProperties = {
     minHeight: '600px'
 }
 
+export function Filter(props: FilterProps) {
+    const [showBrandsFilters, setShowBrandsFilters] = useState<boolean>(true);
+    const [showModelsFilters, setShowModelsFilters] = useState<boolean>(true);
 
-export function Filter() {
-
-    const options = ['XXX', 'YYY', 'ZZZ', 'WWW'];
+    const { brands, models } = props.options;
 
     return (
         <section style={styles}>
-            <ul>
-                {options.length > 0 ? (
-                    options.map((item, index) => (
-                        <li key={index} >
-                            {item}
-                        </li>
-                    ))
-                ) : (
-                    <li>No matches found</li>
-                )}
-            </ul>
+            <div>
+                <button onClick={() => setShowBrandsFilters(!showBrandsFilters)}>
+                    <p>Marca</p>
+                </button>
+                {showBrandsFilters && <ul>
+                    {brands.length > 0 ? (
+                        brands.map((item, index) => (
+                            <li key={index} >
+                                <input type="checkbox" name="" id="" />  {item}
+                            </li>
+                        ))
+                    ) : (
+                        <li>Sin filtros disponibles.</li>
+                    )}
+                </ul>}
+            </div>
+
+            <div>
+                <button onClick={() => setShowModelsFilters(!showModelsFilters)}>
+                    <p>Modelos</p>
+                </button>
+                {showModelsFilters &&  <ul>
+                    {models.length > 0 ? (
+                        models.map((item, index) => (
+                            <li key={index} >
+                                <input type="checkbox" name="" id="" />  {item}
+                            </li>
+                        ))
+                    ) : (
+                        <li>Sin filtros disponibles.</li>
+                    )}
+                </ul>}
+            </div>
+
         </section>
     );
 }

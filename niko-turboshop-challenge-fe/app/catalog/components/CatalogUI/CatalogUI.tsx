@@ -19,7 +19,7 @@ const styles: React.CSSProperties = {
 export default function CatalogUI(props: CatalogUIProps) {
 
     const [searchTerm, setSearchTerm] = useState<string | undefined>();
-    const filteredParts = useCatalogFilter({
+    const {filterOptions, filteredParts} = useCatalogFilter({
         searchTerm,
         brand: '',
         model: '',
@@ -35,7 +35,7 @@ export default function CatalogUI(props: CatalogUIProps) {
     return (
         <div style={styles}>
             <div>
-                <Filter  />
+                {filterOptions && <Filter options={filterOptions}/>}
             </div>
             <div>
                 <SearchInput value={searchTerm} onSearch={(e: any) => setSearchTerm(e.target.value)}/>
