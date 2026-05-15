@@ -27,7 +27,6 @@ export default function useCatalog() {
         );
 
         requesterRef.current.onmessage = (event: MessageEvent<any>) => {
-            console.log('requester hs sent a message')
             reconcilerRef.current?.postMessage({
                 type: 'RECONCILE_PART_DATA',
                 payload: event.data.payload
@@ -39,9 +38,7 @@ export default function useCatalog() {
         );
 
         reconcilerRef.current.onmessage = (event: MessageEvent<any>) => {
-            console.log("Reconciler Worker said:", event.data);
             getCatalog().then((parts: Part[]) => {
-                console.log('use catalog', parts);
                 setCatalog(parts);
             });
         };

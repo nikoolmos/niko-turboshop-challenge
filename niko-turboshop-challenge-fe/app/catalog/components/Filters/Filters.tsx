@@ -6,6 +6,8 @@ export interface FilterProps {
         models: string[],
         brands: string[],
     };
+    onFilterByBrand: (brand: string) => void;
+    onFilterByModel: (model: string) => void;
 }
 const styles: React.CSSProperties = {
     display: 'flex',
@@ -50,14 +52,14 @@ export function Filter(props: FilterProps) {
             <div>
                 <div style={{ marginBottom: '2rem' }}>
                     <button style={{cursor: 'pointer' }} onClick={() => setShowBrandsFilters(!showBrandsFilters)}>
-                        {showBrandsFilters ? <i>▲</i> : <i>▼</i>}
+                        <i style={{fontSize: '1.5rem'}}>{showBrandsFilters ? '▲' : '▼'}</i>
                         <span style={filterTypeTitle}>Marca</span>
                     </button>
                     {showBrandsFilters && <ul>
                         {brands.length > 0 ? (
                             brands.map((item) => (
                                 <li key={item} >
-                                    <input style={{marginRight: '10px'}} type="checkbox" name="" id={item} />
+                                    <input style={{marginRight: '10px'}} type="checkbox" name="" id={item} onChange={() => props.onFilterByBrand(item)}/>
                                     <label htmlFor={item}>{item}</label>
                                 </li>
                             ))
@@ -69,14 +71,14 @@ export function Filter(props: FilterProps) {
 
                 <div>
                     <button style={{cursor: 'pointer' }} onClick={() => setShowModelsFilters(!showModelsFilters)}>
-                        {showModelsFilters ? <i>▲</i> : <i>▼</i>}
+                        <i style={{fontSize: '1.5rem'}}>{showModelsFilters ? '▲' : '▼'}</i>
                         <span style={filterTypeTitle}>Modelos</span>
                     </button>
                     {showModelsFilters && <ul>
                         {models.length > 0 ? (
                             models.map((item) => (
                                 <li key={item} >
-                                    <input style={{marginRight: '10px'}} type="checkbox" name="" id={item} />
+                                    <input style={{marginRight: '10px'}} type="checkbox" name="" id={item}  onChange={() => props.onFilterByModel(item)}/>
                                     <label htmlFor={item}>{item}</label>
                                 </li>
                             ))

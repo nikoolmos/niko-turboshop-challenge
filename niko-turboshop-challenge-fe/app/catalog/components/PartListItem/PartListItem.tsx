@@ -1,5 +1,5 @@
 import React from "react";
-import { Part } from "../../workers/reconciler";
+import { Part } from "../../interfaces/part";
 import { currencyFormatter } from "@/app/common/utils/currencyFormatter";
 
 interface PartListItemProps {

@@ -1,15 +1,6 @@
 "use client";
 
-export interface Part {
-    id: string;
-    title: string;
-    description: string;
-    sku: string;
-    qty: number;
-    price: number;
-    picture: string[];
-    providers: string[];
-}
+import { Part } from "../interfaces/part";
 
 interface ReconcilePartData {
     type: 'RECONCILE_PART_DATA',
@@ -67,7 +58,6 @@ export const updateCatalog = async (map: Map<string, Part>) => {
 };
 
 self.onmessage = (e: MessageEvent<ReconcilePartData>) => {
-console.log('reconciler', e)
     if (e.data.type === "RECONCILE_PART_DATA") {
         const { payload } = e.data;
 

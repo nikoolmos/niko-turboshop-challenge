@@ -1,13 +1,19 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
-import { getCatalog } from "../../db/db";
+import { useMemo } from "react";
 import { Part } from "../../interfaces/part";
+import { FilterStrategy } from "./filterStrategies/filterStrategy";
+import { FilterBySearchTermStrategy } from "./filterStrategies/filterBySearchTermStrategy";
+import { FilterByBrandStrategy } from "./filterStrategies/filterByBrandStrategy";
+import { FilterByModelStrategy } from "./filterStrategies/filterByModelStrategy";
+import { FilterByYearFrom } from "./filterStrategies/filterByYearFromStrategy";
+import { FilterByYearUpTo } from "./filterStrategies/filterByYearUpToStrategy";
 
 interface UseCatalogFilterConfig {
     brand: string[];
     model: string[];
-    year: string;
+    yearFrom: string;
+    yearUpTo: string;
     searchTerm: string | undefined;
     catalog: Part[] | undefined;
 }
@@ -22,6 +28,7 @@ export default function useCatalogFilter(config: UseCatalogFilterConfig) {
         const brands = new Set<string>();
 
         config.catalog.forEach((part: Part) => {
+            console.log('HERE', part);
             part.model?.forEach(model => models.add(model));
             brands.add(part.brand);
         });
@@ -36,38 +43,36 @@ export default function useCatalogFilter(config: UseCatalogFilterConfig) {
 
     const filteredParts = useMemo(() => {
         const isSearchByTermFilterActive = config.searchTerm && config.searchTerm !== '';
-        const isBrandFilterActive = config.brand.length >0;
-        return config?.catalog?.filter((item: Part) => {
-            let result = false;
+        const isBrandFilterActive = config.brand.length > 0;
+        const isModelFilterActive = config.model.length > 0;
+        const isYearFromFilterActive = config.yearFrom !== '';
+        const isYearUpToFilterActive = config.yearUpTo !== '';
+        const filters = new Set<FilterStrategy>();
 
+        if (isSearchByTermFilterActive) {
+            filters.add(new FilterBySearchTermStrategy(config.searchTerm!));
+        }
 
-            if(isSearchByTermFilterActive && isBrandFilterActive && config.searchTerm) {
-                return item.title.toLowerCase().includes(config.searchTerm.toLowerCase())
-            }
+        if (isBrandFilterActive) {
+            filters.add(new FilterByBrandStrategy(config.brand));
+        }
 
-            if (config.searchTerm && config.searchTerm !== '') {
-            } else {
-                result = true;
-            }
+        if (isModelFilterActive) {
+            filters.add(new FilterByModelStrategy(config.model));
+        }
 
-            // if (config.model !== '') {
-            //     result = result && item.title.toLowerCase().includes(config.model.toLowerCase())
-            // }
+        if (isYearFromFilterActive) {
+            filters.add(new FilterByYearFrom(config.yearFrom));
+        }
 
-            // if (config.year !== '') {
-            //     result = result && item.title.toLowerCase().includes(config.year.toLowerCase())
-            // }
+        if (isYearUpToFilterActive) {
+            filters.add(new FilterByYearUpTo(config.yearUpTo));
+        }
 
-            if (config.brand.length > 0) {
-                result = result && config.brand.includes(item.title.toLocaleLowerCase())
-            } else {
-                result = true;
-            }
-
-            return result;
-
+        return config?.catalog?.filter((part: Part) => {
+            return filters.values().every(filter => filter.execute(part));
         });
-    }, [config]);
+    }, [config.brand, config.model, config.catalog, config.searchTerm, config.yearUpTo, config.yearFrom]);
 
     return {
         filteredParts,

@@ -19,14 +19,33 @@ const styles: React.CSSProperties = {
 export default function CatalogUI(props: CatalogUIProps) {
 
     const [searchTerm, setSearchTerm] = useState<string | undefined>();
-    const {filterOptions, filteredParts} = useCatalogFilter({
+    const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+    const [selectedModels, setSelectedModels] = useState<string[]>([]);
+
+    const toggleBrandSelection = (brand: string) => {
+        if (selectedBrands.includes(brand)) {
+            setSelectedBrands(selectedBrands.filter(theBrand => theBrand !== brand));
+        } else {
+            setSelectedBrands([...selectedBrands, brand]);
+        }
+    }
+
+    const toggleModelsSelection = (model: string) => {
+        if (selectedModels.includes(model)) {
+            setSelectedModels(selectedModels.filter(theModel => theModel !== model));
+        } else {
+            setSelectedModels([...selectedModels, model]);
+        }
+    }
+
+    const { filterOptions, filteredParts } = useCatalogFilter({
         searchTerm,
-        brand: [],
-        model: [],
-        year: '',
+        brand: selectedBrands,
+        model: selectedModels,
+        yearFrom: '',
+        yearUpTo: '',
         catalog: props.catalog
     });
-    console.log('XXXX', props);
 
     if (!props.catalog) {
         return <EmptyState />;
@@ -35,11 +54,11 @@ export default function CatalogUI(props: CatalogUIProps) {
     return (
         <div style={styles}>
             <div>
-                {filterOptions && <Filter options={filterOptions}/>}
+                {filterOptions && <Filter options={filterOptions} onFilterByBrand={(brand: string) => toggleBrandSelection(brand)} onFilterByModel={(model: string) => toggleModelsSelection(model)} />}
             </div>
             <div>
-                <SearchInput value={searchTerm} onSearch={(e: any) => setSearchTerm(e.target.value)}/>
-                {filteredParts ? <PartList catalog={filteredParts} /> : <EmptyState /> }
+                <SearchInput value={searchTerm} onSearch={(e: any) => setSearchTerm(e.target.value)} />
+                {filteredParts ? <PartList catalog={filteredParts} /> : <EmptyState />}
             </div>
         </div>
     );

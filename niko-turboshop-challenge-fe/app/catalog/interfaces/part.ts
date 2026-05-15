@@ -7,7 +7,7 @@ export interface Part {
     price: number;
     picture: string[];
     providers: string[];
-    model: string[];
+    model: string[] | undefined;
     year: Array<{
         from: string,
         upTo: string;
