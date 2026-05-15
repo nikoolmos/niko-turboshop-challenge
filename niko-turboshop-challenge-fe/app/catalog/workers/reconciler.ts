@@ -16,7 +16,6 @@ interface ReconcilePartData {
     payload: Part[],
 }
 
-
 const DB_NAME = 'niko-turboshop-challenge-db';
 const DB_VERSION = 1;
 
@@ -68,7 +67,7 @@ export const updateCatalog = async (map: Map<string, Part>) => {
 };
 
 self.onmessage = (e: MessageEvent<ReconcilePartData>) => {
-
+console.log('reconciler', e)
     if (e.data.type === "RECONCILE_PART_DATA") {
         const { payload } = e.data;
 
