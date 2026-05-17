@@ -22,6 +22,7 @@ export default function CatalogUI(props: CatalogUIProps) {
     const [searchTerm, setSearchTerm] = useState<string | undefined>();
     const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
     const [selectedModels, setSelectedModels] = useState<string[]>([]);
+    const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
     const toggleBrandSelection = (brand: string) => {
         if (selectedBrands.includes(brand)) {
@@ -60,7 +61,7 @@ export default function CatalogUI(props: CatalogUIProps) {
             <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <SearchInput value={searchTerm} onSearch={(e: any) => setSearchTerm(e.target.value)} />
-                    <PageSizeSelect onChange={() => { }} size={10} options={[10, 20, 50, 100]} label="Partes Por Página" />
+                    <PageSizeSelect onChange={(val) => { setItemsPerPage(val) }} size={itemsPerPage} options={[10, 20, 50, 100]} label="Partes Por Página" />
                 </div>
                 {filteredParts ? <PartList catalog={filteredParts} /> : <EmptyState />}
             </div>
