@@ -9,12 +9,12 @@ export class PartRequestHandler {
         this.dataSources = PartDataSourceFactory.createPartDataSources();
     }
 
-    public getAllCatalogs(page: string, limit: string) {
+    public async getAllCatalogs(page: string, limit: string) {
         const myPromisesArray = this.dataSources.map(
             datasource => datasource.getCatalog(page, limit)
         );
 
-        return Promise.allSettled(myPromisesArray)
+        const partsList = await Promise.allSettled(myPromisesArray)
             .then(promises => {
                 const parts: Part[] = [];
 
@@ -24,5 +24,19 @@ export class PartRequestHandler {
 
                 return parts;
             });
+
+        const limitAsNumber = parseInt(limit, 10);
+        const pageAsNumber = parseInt(page, 10);
+        let sliceStart = 0;
+        let sliceEnd = limitAsNumber;
+        
+        if (pageAsNumber !== 1) {
+            sliceStart = limitAsNumber * (pageAsNumber - 1);
+            sliceEnd = limitAsNumber * pageAsNumber;
+        }
+
+        return partsList.slice(sliceStart, sliceEnd);
     }
+
+
 }
