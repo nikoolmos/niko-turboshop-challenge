@@ -8,7 +8,10 @@ export class CatalogController {
 
     @Get('/')
     public async getCatalog(@Query('page') page: string, @Query('limit') limit: string, @Res() response: Response) {
-        const res = await CatalogEntrypoint.getPartsCatalog(page, limit);
+        const sanitizedPage = !page ? '0' : page;
+        const sanitizedLimit = !limit ? '20': limit;
+
+        const res = await CatalogEntrypoint.getPartsCatalog(sanitizedPage, sanitizedLimit);
         console.log('LA RESPUESTA ES', res);
         response.status(200).json(res).send();
     }
