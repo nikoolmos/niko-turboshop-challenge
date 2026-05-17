@@ -5,6 +5,7 @@ import { Filter } from '../Filters/Filters';
 import { PartList } from '../PartList/PartList';
 import { SearchInput } from '../SearchInput/SearchInput';
 import useCatalogFilter from '../../hooks/useCatalogFilter/useCatalogFilter';
+import { PageSizeSelect } from '../PageSizeSelect/PageSizeSelect';
 
 interface CatalogUIProps {
     catalog: Part[] | undefined;
@@ -57,7 +58,10 @@ export default function CatalogUI(props: CatalogUIProps) {
                 {filterOptions && <Filter options={filterOptions} onFilterByBrand={(brand: string) => toggleBrandSelection(brand)} onFilterByModel={(model: string) => toggleModelsSelection(model)} />}
             </div>
             <div>
-                <SearchInput value={searchTerm} onSearch={(e: any) => setSearchTerm(e.target.value)} />
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <SearchInput value={searchTerm} onSearch={(e: any) => setSearchTerm(e.target.value)} />
+                    <PageSizeSelect onChange={() => { }} size={10} options={[10, 20, 50, 100]} label="Partes Por Página" />
+                </div>
                 {filteredParts ? <PartList catalog={filteredParts} /> : <EmptyState />}
             </div>
         </div>
