@@ -1,7 +1,7 @@
 import React from "react";
 import { Part } from "../../interfaces/part";
 import { currencyFormatter } from "@/app/common/utils/currencyFormatter";
-
+import { useRouter } from "next/navigation";
 interface PartListItemProps {
     part: Part
 }
@@ -56,6 +56,13 @@ const missingImageStyles: React.CSSProperties = {
 }
 
 export function PartListItem(props: PartListItemProps) {
+
+    const {push} = useRouter();
+
+    const navigateToDetailsPage = () => {
+        push(`${props.part.id}/?provider=${props.part.providers[0]}`);
+    }
+
     return (
         <div style={styles}>
             <div style={missingImageStyles}>
@@ -65,7 +72,9 @@ export function PartListItem(props: PartListItemProps) {
             {/* <img style={styles} src="" alt="" /> */}
 
             <div style={infoContainerWrapperStyle}>
-                <div style={infoContainerStyle}>
+                <div style={infoContainerStyle} onClick={() => {
+                    navigateToDetailsPage();
+                }}>
                     <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>{props.part.title}</p>
                     <p>{props.part.description}</p>
                 </div>

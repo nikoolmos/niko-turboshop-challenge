@@ -15,7 +15,7 @@ export function PartList(props: PartListProps) {
 
     return (
         <section style={styles}>
-            {props.catalog?.map(part => <PartListItem part={part} />)}
+            {props.catalog?.map(part => <PartListItem key={part.id} part={part} />)}
         </section>
     );
 

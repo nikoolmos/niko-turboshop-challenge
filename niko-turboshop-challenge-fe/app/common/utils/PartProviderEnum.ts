@@ -1,0 +1,5 @@
+export enum PartProviders {
+    AUTO_PARTS_PLUS = 'AUTO_PARTS_PLUS',
+    REPUESTOS_MAX = 'REPUESTOS_MAX',
+    GLOBAL_PARTS = 'GLOBAL_PARTS',
+}
