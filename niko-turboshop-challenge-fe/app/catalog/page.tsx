@@ -5,12 +5,17 @@ import Navbar from "./components/Navbar/Narbar";
 import useCatalog from "./hooks/useCatalog/useCatalog";
 
 export default function Catalog() {
-    const { catalog } = useCatalog();
+    
+    const { catalog, itemsPerPage, handleSetItemsPerPage } = useCatalog();
 
     return (
         <div>
             <Navbar />
-            <CatalogUI catalog={catalog} />
+            <CatalogUI
+                catalog={catalog}
+                itemsPerPage={itemsPerPage}
+                onItemsPerPageChange={handleSetItemsPerPage}
+            />
         </div>
     )
 }

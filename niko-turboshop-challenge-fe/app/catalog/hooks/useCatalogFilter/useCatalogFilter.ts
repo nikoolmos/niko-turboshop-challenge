@@ -28,7 +28,6 @@ export default function useCatalogFilter(config: UseCatalogFilterConfig) {
         const brands = new Set<string>();
 
         config.catalog.forEach((part: Part) => {
-            console.log('HERE', part);
             part.model?.forEach(model => models.add(model));
             brands.add(part.brand);
         });

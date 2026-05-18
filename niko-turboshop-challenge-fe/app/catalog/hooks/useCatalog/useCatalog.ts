@@ -5,11 +5,24 @@ import { getCatalog } from "../../db/db";
 import { Part } from "../../interfaces/part";
 
 export default function useCatalog() {
+    const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+    const [page, setPage] = useState<number>(1);
+    const [catalog, setCatalog] = useState<Part[]>();
+
     const workerRef = useRef<Worker | null>(null);
     const requesterRef = useRef<Worker | null>(null);
     const reconcilerRef = useRef<Worker | null>(null);
 
-    const [catalog, setCatalog] = useState<Part[]>();
+
+    useEffect(() => {
+        requesterRef.current?.postMessage({
+            type: 'NEW_PARAMS',
+            payload: {
+                page,
+                limit: itemsPerPage,
+            },
+        });
+    }, [itemsPerPage, page]);
 
     useEffect(() => {
         workerRef.current = new Worker(
@@ -26,11 +39,28 @@ export default function useCatalog() {
             new URL("../../workers/requester.ts", import.meta.url)
         );
 
+        requesterRef.current?.postMessage({
+            type: 'INIT',
+            payload: {
+                baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL
+            },
+        });
+
+        requesterRef.current?.postMessage({
+            type: 'NEW_PARAMS',
+            payload: {
+                page,
+                limit: itemsPerPage,
+            },
+        });
+
         requesterRef.current.onmessage = (event: MessageEvent<any>) => {
-            reconcilerRef.current?.postMessage({
-                type: 'RECONCILE_PART_DATA',
-                payload: event.data.payload
-            })
+            setCatalog(event.data.payload);
+
+            // reconcilerRef.current?.postMessage({
+            //     type: 'RECONCILE_PART_DATA',
+            //     payload: event.data.payload
+            // });
         };
 
         reconcilerRef.current = new Worker(
@@ -53,7 +83,14 @@ export default function useCatalog() {
 
     }, []);
 
+
+    const handleSetPage = (page: number) => setPage(page);
+    const handleSetItemsPerPage = (itemsPerPage: number) => setItemsPerPage(itemsPerPage);
+
     return {
-        catalog
+        catalog,
+        itemsPerPage,
+        handleSetItemsPerPage,
+        handleSetPage,
     };
 }

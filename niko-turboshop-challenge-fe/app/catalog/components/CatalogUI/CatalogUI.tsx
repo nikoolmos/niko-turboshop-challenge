@@ -9,12 +9,13 @@ import { PageSizeSelect } from '../PageSizeSelect/PageSizeSelect';
 
 interface CatalogUIProps {
     catalog: Part[] | undefined;
+    itemsPerPage: number;
+    onItemsPerPageChange: (value: number) => void;
 }
 
 const styles: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'center',
-    //    alignItems: 'center'
 }
 
 export default function CatalogUI(props: CatalogUIProps) {
@@ -22,7 +23,6 @@ export default function CatalogUI(props: CatalogUIProps) {
     const [searchTerm, setSearchTerm] = useState<string | undefined>();
     const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
     const [selectedModels, setSelectedModels] = useState<string[]>([]);
-    const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
     const toggleBrandSelection = (brand: string) => {
         if (selectedBrands.includes(brand)) {
@@ -61,7 +61,7 @@ export default function CatalogUI(props: CatalogUIProps) {
             <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <SearchInput value={searchTerm} onSearch={(e: any) => setSearchTerm(e.target.value)} />
-                    <PageSizeSelect onChange={(val) => { setItemsPerPage(val) }} size={itemsPerPage} options={[10, 20, 50, 100]} label="Partes Por Página" />
+                    <PageSizeSelect onChange={(val) => { props.onItemsPerPageChange(val) }} size={props.itemsPerPage} options={[10, 20, 50, 100]} label="Partes Por Página" />
                 </div>
                 {filteredParts ? <PartList catalog={filteredParts} /> : <EmptyState />}
             </div>
