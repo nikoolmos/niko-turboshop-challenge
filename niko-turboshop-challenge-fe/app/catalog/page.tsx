@@ -1,7 +1,7 @@
 "use client";
 
 import CatalogUI from "./components/CatalogUI/CatalogUI";
-import Navbar from "./components/Navbar/Narbar";
+import Navbar from "../common/components/Navbar/Narbar";
 import useCatalog from "./hooks/useCatalog/useCatalog";
 
 export default function Catalog() {

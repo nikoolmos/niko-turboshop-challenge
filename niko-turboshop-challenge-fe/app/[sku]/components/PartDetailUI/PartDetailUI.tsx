@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { PartDetail } from "../../interfaces/PartDetail";
+import { currencyFormatter } from "@/app/common/utils/currencyFormatter";
 
 export interface PartDetailUIProps {
     part: PartDetail;
@@ -80,7 +81,7 @@ export function PartDetailUI(props: PartDetailUIProps) {
                     </li>
                     <li>
                         <b>PRECIO UNITARIO</b>
-                        <p>{part.unitPrice}</p>
+                        <p>{currencyFormatter(part.unitPrice)}</p>
                     </li>
                     <li>
                         <b>MONEDA</b>
