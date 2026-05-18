@@ -2,11 +2,13 @@ import { AutoPartsPlustemDetailResponse } from "src/item-detail/interfaces/AutoP
 import { ItemDetail } from "src/item-detail/interfaces/item-detail";
 import { PartDetailNormalizer } from "src/item-detail/interfaces/part-detail-normalizer/part-detail-normalizer.interface";
 import { Part } from "src/part/part.interface";
+import type { AxiosResponse } from "axios";
 
 export class AutoPartsPlusPartDetailNormalizer implements PartDetailNormalizer {
 
     normalize(data: unknown): ItemDetail {
-        const theData = data as AutoPartsPlustemDetailResponse;
+        const myData = data as AxiosResponse;
+        const theData = myData.data as AutoPartsPlustemDetailResponse;
         const thePart = theData.parts[0];
 
         const result: ItemDetail = {

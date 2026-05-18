@@ -7,12 +7,12 @@ export class BaseService {
     protected queryParams: Record<string,string>;
 
     constructor() {
-        this.providerBaseUrl = '';
+        this.providerBaseUrl = 'https://web-production-84144.up.railway.app';
         this.endpoint = '';
         this.queryParams = {};
     }
 
-    protected request(): unknown {
+    protected async request(): Promise<unknown> {
         const url = new URL(this.providerBaseUrl + this.endpoint);
 
         for(const param in this.queryParams) {

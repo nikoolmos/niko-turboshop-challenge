@@ -9,11 +9,11 @@ export class AutoPartsPlusService extends BaseService {
     }
 
     
-    public getPartDetail(id: string): AutoPartsPlustemDetailResponse {
+    public async getPartDetail(id: string): Promise<AutoPartsPlustemDetailResponse> {
         this.queryParams = {
             sku: id
         };
 
-        return super.request() as AutoPartsPlustemDetailResponse;
+        return await super.request() as AutoPartsPlustemDetailResponse;
     }
 }

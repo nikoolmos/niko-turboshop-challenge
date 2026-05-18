@@ -1,3 +1,3 @@
 export interface GetDetailsService {
-    getPartDetail(id: string): unknown;
+    getPartDetail(id: string): Promise<unknown>;
 }

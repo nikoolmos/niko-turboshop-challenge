@@ -1,10 +1,12 @@
+import { AxiosResponse } from "axios";
 import { GlobalPartsItemDetailResponse } from "src/item-detail/interfaces/GlobalPartsItemDetailResponse";
 import { ItemDetail } from "src/item-detail/interfaces/item-detail";
 import { PartDetailNormalizer } from "src/item-detail/interfaces/part-detail-normalizer/part-detail-normalizer.interface";
 
 export class GlobalPartsPartDetailNormalizer implements PartDetailNormalizer {
     normalize(data: unknown): ItemDetail {
-        const theData = data as GlobalPartsItemDetailResponse;
+        const myData = data as AxiosResponse;
+        const theData = myData.data as GlobalPartsItemDetailResponse;
         const thePart = theData.ResponseEnvelope.Body.SearchResults.Items[0];
 
         const result: ItemDetail = {
@@ -17,7 +19,7 @@ export class GlobalPartsPartDetailNormalizer implements PartDetailNormalizer {
             categoryName: thePart.ProductDetails.CategoryInfo.PrimaryCategory.Name,
             unitPrice: thePart.PricingInfo.ListPrice.Amount,
             currencyCode: thePart.PricingInfo.ListPrice.CurrencyCode,
-            qtyAvailable:thePart.AvailabilityInfo.QuantityInfo.AvailableQuantity,
+            qtyAvailable: thePart.AvailabilityInfo.QuantityInfo.AvailableQuantity,
             warehouseLocation: thePart.AvailabilityInfo.WarehouseInfo.PrimaryWarehouse.Name,
             weightValue: thePart.PhysicalAttributes.Weight.Value,
             weightUnit: thePart.PhysicalAttributes.Weight.Unit,

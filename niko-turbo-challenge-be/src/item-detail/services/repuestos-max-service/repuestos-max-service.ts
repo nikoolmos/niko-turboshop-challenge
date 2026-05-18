@@ -9,11 +9,11 @@ export class RepuestosMaxService extends BaseService {
         this.endpoint = '/api/repuestosmax/productos';
     }
 
-    public getPartDetail(id: string): RepuestosMaxItemDetailResponse {
+    public async getPartDetail(id: string): Promise<RepuestosMaxItemDetailResponse> {
             this.queryParams = {
                 codigo: id
             };
     
-            return super.request() as RepuestosMaxItemDetailResponse;
+            return await super.request() as RepuestosMaxItemDetailResponse;
         }
 }

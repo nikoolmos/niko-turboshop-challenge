@@ -29,7 +29,7 @@ export class GetPartDetailInfoUseCase {
         this.repuestosMaxNormalizer = repuestosMaxNormalizer;
     }
 
-    execute(id: string, provider: PartProviders): ItemDetail {
+    execute(id: string, provider: PartProviders): Promise<ItemDetail> {
 
         switch (provider) {
             case PartProviders.AUTO_PARTS_PLUS:
@@ -42,22 +42,26 @@ export class GetPartDetailInfoUseCase {
 
     }
 
-    private getPartDetailsFromAutoPartsPlus(id: string): ItemDetail {
-        const response = this.autoPartsPlusService.getPartDetail(id);
+    private async getPartDetailsFromAutoPartsPlus(id: string): Promise<ItemDetail> {
+        const response = await this.autoPartsPlusService.getPartDetail(id);
         const result = this.autoPartsPlusNormalizer.normalize(response);
         return result;
     }
 
-    private getPartDetailsFromRepuestosMax(id: string): ItemDetail {
-        const response = this.repuestosMaxService.getPartDetail(id);
+    private async getPartDetailsFromRepuestosMax(id: string): Promise<ItemDetail> {
+        const response = await this.repuestosMaxService.getPartDetail(id);
         const result = this.repuestosMaxNormalizer.normalize(response);
         return result;
     }
 
-    private getPartDetailsFromGlobalParts(id: string): ItemDetail {
-        const response = this.globalPartsService.getPartDetail(id);
-        const result = this.globalPartsNormalizer.normalize(response);
-        return result;
+    private async getPartDetailsFromGlobalParts(id: string): Promise<ItemDetail> {
+        try {
+            const response = await this.globalPartsService.getPartDetail(id);
+            const result = this.globalPartsNormalizer.normalize(response);
+            return result;
+        } catch (error) {
+            throw error;
+        }
     }
 
 
