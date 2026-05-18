@@ -1,3 +1,4 @@
+import { PartProviders } from "src/constants/part-providers-enum";
 import { PartDataNormalizer } from "src/part-data-normalizer/part-data-normalizer.interface";
 import { Part } from "src/part/part.interface";
 
@@ -51,7 +52,7 @@ export class AutoPartsPlusPartDataNormalizer implements PartDataNormalizer<AutoP
                 description: part.desc,
                 picture: part.img_urls,
                 price: part.unit_price,
-                providers: ['AutoPartsPlus'],
+                providers: [PartProviders.AUTO_PARTS_PLUS.toString()],
                 qty: part.qty_available,
                 sku: part.sku,
                 title: part.title,

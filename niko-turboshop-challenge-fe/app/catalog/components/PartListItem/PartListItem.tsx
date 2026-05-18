@@ -2,6 +2,7 @@ import React from "react";
 import { Part } from "../../interfaces/part";
 import { currencyFormatter } from "@/app/common/utils/currencyFormatter";
 import { useRouter } from "next/navigation";
+import { RealTimePrice } from "@/app/common/components/RealTimePrice/RealTimePrice";
 interface PartListItemProps {
     part: Part
 }
@@ -87,7 +88,9 @@ export function PartListItem(props: PartListItemProps) {
                 </div>
             </div>
             <div style={rightSectionStyles}>
-                <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }} >{currencyFormatter(props.part.price)}</p>
+                <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                    <RealTimePrice provider={props.part.providers[0]} sku={props.part.sku} defaultValue={props.part.price} />
+                </p>
                 <p style={{ fontStyle: 'italic' }}>{props.part.qty} unidades</p>
             </div>
         </div>
