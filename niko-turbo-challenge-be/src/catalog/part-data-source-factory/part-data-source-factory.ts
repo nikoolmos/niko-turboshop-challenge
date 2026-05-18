@@ -1,8 +1,8 @@
-import { PartDataSource } from 'src/part-data-source/part-data-source';
+import { PartDataSource } from 'src/catalog/part-data-source/part-data-source';
 import PartDataSourceConfig from '../configs/part-data-source-config.json';
-import { AutoPartsPlusPartDataNormalizer } from 'src/auto-parts-plus-part-data-normalizer/auto-parts-plus-part-data-normalizer';
+import { AutoPartsPlusPartDataNormalizer } from 'src/catalog/auto-parts-plus-part-data-normalizer/auto-parts-plus-part-data-normalizer';
 import { PartProviders } from 'src/constants/part-providers-enum';
-import { RepuestosMaxPartDataNormalizer } from 'src/repuestos-max-part-data-normalizer/repuestos-max-part-data-normalizer';
+import { RepuestosMaxPartDataNormalizer } from 'src/catalog/repuestos-max-part-data-normalizer/repuestos-max-part-data-normalizer';
 
 export class PartDataSourceFactory {
 

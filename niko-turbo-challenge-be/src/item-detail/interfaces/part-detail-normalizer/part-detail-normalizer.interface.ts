@@ -1,4 +1,4 @@
-import { Part } from "src/part/part.interface";
+import { Part } from "src/catalog/part/part.interface";
 import { ItemDetail } from "../item-detail";
 
 export interface PartDetailNormalizer {

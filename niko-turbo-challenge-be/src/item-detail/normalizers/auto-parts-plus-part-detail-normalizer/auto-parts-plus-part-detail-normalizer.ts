@@ -1,7 +1,7 @@
 import { AutoPartsPlustemDetailResponse } from "src/item-detail/interfaces/AutoPartsPlustemDetailResponse";
 import { ItemDetail } from "src/item-detail/interfaces/item-detail";
 import { PartDetailNormalizer } from "src/item-detail/interfaces/part-detail-normalizer/part-detail-normalizer.interface";
-import { Part } from "src/part/part.interface";
+import { Part } from "src/catalog/part/part.interface";
 import type { AxiosResponse } from "axios";
 
 export class AutoPartsPlusPartDetailNormalizer implements PartDetailNormalizer {

@@ -1,4 +1,4 @@
-import { PartRequestHandler } from "src/part-request-handler/part-request-handler";
+import { PartRequestHandler } from "src/catalog/part-request-handler/part-request-handler";
 
 export class CatalogEntrypoint {
 

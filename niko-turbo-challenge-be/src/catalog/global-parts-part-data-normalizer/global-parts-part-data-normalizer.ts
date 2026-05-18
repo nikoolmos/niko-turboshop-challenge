@@ -1,7 +1,7 @@
 import { PartProviders } from "src/constants/part-providers-enum";
-import { PartDataNormalizer } from "src/part-data-normalizer/part-data-normalizer.interface";
-import { PartDataSource } from "src/part-data-source/part-data-source";
-import { Part } from "src/part/part.interface";
+import { PartDataNormalizer } from "src/catalog/part-data-normalizer/part-data-normalizer.interface";
+import { PartDataSource } from "src/catalog/part-data-source/part-data-source";
+import { Part } from "src/catalog/part/part.interface";
 
 export interface GlobalPartsCatalogResponse {
     ResponseEnvelope: ResponseEnvelope;

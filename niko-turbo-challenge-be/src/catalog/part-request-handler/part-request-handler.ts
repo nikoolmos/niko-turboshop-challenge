@@ -1,6 +1,6 @@
-import { PartDataSourceFactory } from "src/part-data-source-factory/part-data-source-factory";
-import { PartDataSource } from "src/part-data-source/part-data-source";
-import { Part } from "src/part/part.interface";
+import { PartDataSourceFactory } from "../part-data-source-factory/part-data-source-factory";
+import { PartDataSource } from "../part-data-source/part-data-source";
+import { Part } from "../part/part.interface";
 
 export class PartRequestHandler {
     private dataSources: Array<PartDataSource>;

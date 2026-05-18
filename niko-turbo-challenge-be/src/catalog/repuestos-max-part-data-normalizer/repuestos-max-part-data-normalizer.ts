@@ -1,6 +1,6 @@
 import { PartProviders } from "src/constants/part-providers-enum";
-import { PartDataNormalizer } from "src/part-data-normalizer/part-data-normalizer.interface";
-import { Part } from "src/part/part.interface";
+import { PartDataNormalizer } from "src/catalog/part-data-normalizer/part-data-normalizer.interface";
+import { Part } from "src/catalog/part/part.interface";
 
 export interface RepuestosMaxCatalogResponse {
     exito: boolean;

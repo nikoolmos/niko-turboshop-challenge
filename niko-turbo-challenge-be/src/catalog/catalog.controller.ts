@@ -1,7 +1,7 @@
 import { Controller, Get, Query, Res } from '@nestjs/common';
 import type { Response } from 'express';
 
-import { CatalogEntrypoint } from 'src/catalog-entrypoint/catalog-entrypoint';
+import { CatalogEntrypoint } from 'src/catalog/catalog-entrypoint/catalog-entrypoint';
 
 @Controller('catalog')
 export class CatalogController {
