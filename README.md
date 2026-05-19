@@ -24,7 +24,7 @@ Los enlaces de acceso son los siguientes:
 ### Frontend
 
 ```
-https://niko-turboshop-challenge-fe-production.up.railway.app
+https://niko-turboshop-challenge-fe-production.up.railway.app/catalog
 ```
 
 ### Backend
