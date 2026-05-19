@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import EmptyState from '../emptyState/emptyState';
 import { Part } from '../../interfaces/part';
 import { Filter } from '../Filters/Filters';
@@ -72,7 +71,14 @@ export default function CatalogUI(props: CatalogUIProps) {
         return (
             <>
                 <div>
-                    {filterOptions && <Filter options={filterOptions} onFilterByBrand={(brand: string) => toggleBrandSelection(brand)} onFilterByModel={(model: string) => toggleModelsSelection(model)} />}
+                    {
+                    filterOptions && (
+                        <Filter 
+                        options={filterOptions} 
+                        onFilterByBrand={(brand: string) => toggleBrandSelection(brand)} 
+                        onFilterByModel={(model: string) => toggleModelsSelection(model)}
+                    />
+                    )}
                 </div>
                 <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>

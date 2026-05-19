@@ -53,7 +53,6 @@ export default function useCatalog() {
             type: 'TRIGGER_CATALOG_REQUEST'
         })
 
-
         requesterRef.current.onmessage = (event: MessageEvent<any>) => {
             setCatalog(event.data.payload.parts);
             setTotalPages(event.data.payload.totalPages);
