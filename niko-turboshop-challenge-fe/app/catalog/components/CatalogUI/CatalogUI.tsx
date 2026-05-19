@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import EmptyState from '../../emptyState/emptyState';
+import EmptyState from '../emptyState/emptyState';
 import { Part } from '../../interfaces/part';
 import { Filter } from '../Filters/Filters';
 import { PartList } from '../PartList/PartList';
