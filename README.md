@@ -1,5 +1,19 @@
 # niko-turboshop-challenge
-Mi solución al desafío técnico de ingreso al equipo de Turboshop.
+
+> Mi solución al desafío técnico de ingreso al equipo de Turboshop.
+
+## Generalidades
+
+* La mayor parte del proyecto fue realizado integramente a mano.
+* Se utilizó muy poca Inteligencia Artíficial.
+* Se utilizó Gemini en su versión gratuita y de respuesta rápida como medio de consulta técnica, para resolver dudas o generar algunos componentes básicos (Por ejemplo: `<Loader/>`).
+* La arquitectura general del frontend fue variando a medida que fue avanzando en el proyecto. Estas variaciones son apreciables en el git log.
+* Al comienzo la arquitectura del front utilizaba varios web workers para simular el real-time, esto luego fue descartado pero quedan reminisencias de lo que fue ese código.
+* El real-time se implementó realizando un polling constante del backend al no saber si era posible utilizar web-sockets para poder resolver el desafío.
+* El comportamiento real-time se encuentra encapsulado solamente en los componentes que necesitan ese comportamiento. De manera tal que cuando el componente con real-time no es renderizado, el polling se detiene automáticamente. Esto se realizó así como forma de proteger la performance total del sistema.
+* En caso de falla de una de los endpoints del real-time, se decidió utilizar un valor por defecto.
+* Al comienzo del proyecto, opté por utilizar IndexedDB para el almacenamiento local de la información del catálogo, descarté esa idea con el avance del proyecto. Esa implementación sigue disponible dentro del git log.
+
 
 ## Demo en vivo
 
