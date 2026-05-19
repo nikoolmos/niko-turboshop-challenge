@@ -42,12 +42,14 @@ export default function CatalogUI(props: CatalogUIProps) {
         selectedModels,
         selectedBrands,
         searchTerm,
+        yearFrom,
+        yearUpTo,
         handleBrandsChange,
         handleModelsChange,
-        handleSearchTermChange
+        handleSearchTermChange,
+        handleYearFromChange,
+        handleYearUpToChange
     } = useCatalogFilter({
-        yearFrom: '',
-        yearUpTo: '',
         catalog: props.catalog
     });
 
@@ -67,18 +69,22 @@ export default function CatalogUI(props: CatalogUIProps) {
         }
     }
 
+    const hidePaginator = searchTerm || selectedBrands.length > 0 || selectedModels.length > 0 || yearFrom || yearUpTo;
+
     function Content() {
         return (
             <>
                 <div>
                     {
-                    filterOptions && (
-                        <Filter 
-                        options={filterOptions} 
-                        onFilterByBrand={(brand: string) => toggleBrandSelection(brand)} 
-                        onFilterByModel={(model: string) => toggleModelsSelection(model)}
-                    />
-                    )}
+                        filterOptions && (
+                            <Filter
+                                options={filterOptions}
+                                onFilterByBrand={(brand: string) => toggleBrandSelection(brand)}
+                                onFilterByModel={(model: string) => toggleModelsSelection(model)}
+                                onFilterByYearFrom={handleYearFromChange}
+                                onFilterByYearUpTo={handleYearUpToChange}
+                            />
+                        )}
                 </div>
                 <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -91,7 +97,7 @@ export default function CatalogUI(props: CatalogUIProps) {
                         />
                     </div>
                     {filteredParts ? <PartList catalog={filteredParts} /> : <EmptyState />}
-                    <Paginator totalPages={props.totalPages} onPageClick={props.onPageChange} />
+                    {!hidePaginator ? <Paginator totalPages={props.totalPages} onPageClick={props.onPageChange} /> : null}
                 </div>
             </>
         )

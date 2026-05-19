@@ -3,11 +3,15 @@ import React, { useState } from 'react';
 
 export interface FilterProps {
     options: {
-        models: string[],
-        brands: string[],
+        models: string[];
+        brands: string[];
+        yearFrom: string;
+        yearUpTo: string;
     };
     onFilterByBrand: (brand: string) => void;
     onFilterByModel: (model: string) => void;
+    onFilterByYearFrom: (yearFrom: string) => void;
+    onFilterByYearUpTo: (yearUpTo: string) => void;
 }
 const styles: React.CSSProperties = {
     display: 'flex',
@@ -51,15 +55,15 @@ export function Filter(props: FilterProps) {
             </div>
             <div>
                 <div style={{ marginBottom: '2rem' }}>
-                    <button style={{cursor: 'pointer' }} onClick={() => setShowBrandsFilters(!showBrandsFilters)}>
-                        <i style={{fontSize: '1.5rem'}}>{showBrandsFilters ? '▲' : '▼'}</i>
+                    <button style={{ cursor: 'pointer' }} onClick={() => setShowBrandsFilters(!showBrandsFilters)}>
+                        <i style={{ fontSize: '1.5rem' }}>{showBrandsFilters ? '▲' : '▼'}</i>
                         <span style={filterTypeTitle}>Marca</span>
                     </button>
                     {showBrandsFilters && <ul>
                         {brands.length > 0 ? (
                             brands.map((item) => (
                                 <li key={item} >
-                                    <input style={{marginRight: '10px'}} type="checkbox" name="" id={item} onChange={() => props.onFilterByBrand(item)}/>
+                                    <input style={{ marginRight: '10px' }} type="checkbox" name="" id={item} onChange={() => props.onFilterByBrand(item)} />
                                     <label htmlFor={item}>{item}</label>
                                 </li>
                             ))
@@ -70,15 +74,15 @@ export function Filter(props: FilterProps) {
                 </div>
 
                 <div>
-                    <button style={{cursor: 'pointer' }} onClick={() => setShowModelsFilters(!showModelsFilters)}>
-                        <i style={{fontSize: '1.5rem'}}>{showModelsFilters ? '▲' : '▼'}</i>
+                    <button style={{ cursor: 'pointer' }} onClick={() => setShowModelsFilters(!showModelsFilters)}>
+                        <i style={{ fontSize: '1.5rem' }}>{showModelsFilters ? '▲' : '▼'}</i>
                         <span style={filterTypeTitle}>Modelos</span>
                     </button>
                     {showModelsFilters && <ul>
                         {models.length > 0 ? (
                             models.map((item) => (
                                 <li key={item} >
-                                    <input style={{marginRight: '10px'}} type="checkbox" name="" id={item}  onChange={() => props.onFilterByModel(item)}/>
+                                    <input style={{ marginRight: '10px' }} type="checkbox" name="" id={item} onChange={() => props.onFilterByModel(item)} />
                                     <label htmlFor={item}>{item}</label>
                                 </li>
                             ))
@@ -86,6 +90,23 @@ export function Filter(props: FilterProps) {
                             <li>Sin filtros disponibles.</li>
                         )}
                     </ul>}
+                </div>
+
+                <div>
+                    <button style={{ cursor: 'pointer' }} onClick={() => setShowModelsFilters(!showModelsFilters)}>
+                        <i style={{ fontSize: '1.5rem' }}>{showModelsFilters ? '▲' : '▼'}</i>
+                        <span style={filterTypeTitle}>Años</span>
+                    </button>
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <label style={{fontWeight: 'bold', margin: '10px'}} htmlFor="filtro-from">Desde:</label>
+                            <input style={{backgroundColor: '#EEE', padding: "5px", borderRadius: '5px'}} type="text" id="filtro-from" onChange={(e) => props.onFilterByYearFrom(e.target.value)} />
+                        </div>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <label style={{fontWeight: 'bold', margin: '10px'}} htmlFor="filtro-upto">Hasta:</label>
+                            <input style={{backgroundColor: '#EEE', padding: "5px", borderRadius: '5px'}} type="text" id="filtro-upto" onChange={(e) => props.onFilterByYearUpTo(e.target.value)} />
+                        </div>
+                    </div>
                 </div>
 
             </div>
