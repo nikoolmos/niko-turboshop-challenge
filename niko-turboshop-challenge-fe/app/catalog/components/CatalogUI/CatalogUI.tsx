@@ -25,7 +25,12 @@ const styles: React.CSSProperties = {
 
 function LoaderWrapper() {
     return (
-        <div style={{ marginTop: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{
+            marginTop: '25%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}>
             <Loader />
         </div>
     );
@@ -33,34 +38,35 @@ function LoaderWrapper() {
 
 export default function CatalogUI(props: CatalogUIProps) {
 
-    const [searchTerm, setSearchTerm] = useState<string | undefined>();
-    const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-    const [selectedModels, setSelectedModels] = useState<string[]>([]);
+    const { filterOptions,
+        filteredParts,
+        selectedModels,
+        selectedBrands,
+        searchTerm,
+        handleBrandsChange,
+        handleModelsChange,
+        handleSearchTermChange
+    } = useCatalogFilter({
+        yearFrom: '',
+        yearUpTo: '',
+        catalog: props.catalog
+    });
 
     const toggleBrandSelection = (brand: string) => {
         if (selectedBrands.includes(brand)) {
-            setSelectedBrands(selectedBrands.filter(theBrand => theBrand !== brand));
+            handleBrandsChange(selectedBrands.filter(theBrand => theBrand !== brand));
         } else {
-            setSelectedBrands([...selectedBrands, brand]);
+            handleBrandsChange([...selectedBrands, brand]);
         }
     }
 
     const toggleModelsSelection = (model: string) => {
         if (selectedModels.includes(model)) {
-            setSelectedModels(selectedModels.filter(theModel => theModel !== model));
+            handleModelsChange(selectedModels.filter(theModel => theModel !== model));
         } else {
-            setSelectedModels([...selectedModels, model]);
+            handleModelsChange([...selectedModels, model]);
         }
     }
-
-    const { filterOptions, filteredParts } = useCatalogFilter({
-        searchTerm,
-        brand: selectedBrands,
-        model: selectedModels,
-        yearFrom: '',
-        yearUpTo: '',
-        catalog: props.catalog
-    });
 
     function Content() {
         return (
@@ -70,8 +76,13 @@ export default function CatalogUI(props: CatalogUIProps) {
                 </div>
                 <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <SearchInput value={searchTerm} onSearch={(e: any) => setSearchTerm(e.target.value)} />
-                        <PageSizeSelect onChange={(val) => { props.onItemsPerPageChange(val) }} size={props.itemsPerPage} options={[10, 20, 50, 100]} label="Partes Por Página" />
+                        <SearchInput value={searchTerm} onSearch={(e: any) => handleSearchTermChange(e.target.value)} />
+                        <PageSizeSelect
+                            onChange={(val) => { props.onItemsPerPageChange(val) }}
+                            size={props.itemsPerPage}
+                            options={[10, 20, 50, 100]}
+                            label="Partes Por Página"
+                        />
                     </div>
                     {filteredParts ? <PartList catalog={filteredParts} /> : <EmptyState />}
                     <Paginator totalPages={props.totalPages} onPageClick={props.onPageChange} />
