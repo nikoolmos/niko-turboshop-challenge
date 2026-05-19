@@ -29,14 +29,26 @@ export class PartRequestHandler {
         const pageAsNumber = parseInt(page, 10);
         let sliceStart = 0;
         let sliceEnd = limitAsNumber;
-        
+
         if (pageAsNumber !== 1) {
             sliceStart = limitAsNumber * (pageAsNumber - 1);
             sliceEnd = limitAsNumber * pageAsNumber;
         }
 
-        return partsList.slice(sliceStart, sliceEnd);
+        
+        const pagesQty = Math.round(partsList.length / limitAsNumber);
+        
+        console.log('TOTAL PAGES', pagesQty);
+        console.log('ARRAY LENGTH', partsList.length);
+        console.log('LIMIT', limitAsNumber);
+        console.log('SLICE START', sliceStart);
+        console.log('SLICE END', sliceEnd);
+        
+        return {
+            totalPages: pagesQty,
+            currentPage: page,
+            parts: partsList.slice(sliceStart, sliceEnd),
+        };
     }
-
 
 }

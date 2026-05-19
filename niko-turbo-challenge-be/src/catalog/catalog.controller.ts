@@ -12,7 +12,6 @@ export class CatalogController {
         const sanitizedLimit = !limit ? '20': limit;
 
         const res = await CatalogEntrypoint.getPartsCatalog(sanitizedPage, sanitizedLimit);
-        console.log('LA RESPUESTA ES', res);
         response.status(200).json(res).send();
     }
 }

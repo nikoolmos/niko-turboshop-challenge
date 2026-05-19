@@ -6,7 +6,7 @@ import useCatalog from "./hooks/useCatalog/useCatalog";
 
 export default function Catalog() {
     
-    const { catalog, itemsPerPage, handleSetItemsPerPage } = useCatalog();
+    const { catalog, itemsPerPage, handleSetItemsPerPage, handleSetPage, totalPages, loading } = useCatalog();
 
     return (
         <div>
@@ -15,6 +15,9 @@ export default function Catalog() {
                 catalog={catalog}
                 itemsPerPage={itemsPerPage}
                 onItemsPerPageChange={handleSetItemsPerPage}
+                totalPages={totalPages}
+                onPageChange={handleSetPage}
+                loading={loading}
             />
         </div>
     )

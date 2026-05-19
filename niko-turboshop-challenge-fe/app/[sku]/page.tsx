@@ -2,7 +2,7 @@
 
 import Navbar from "../common/components/Navbar/Narbar";
 import { ErrorState } from "./components/ErrorState/ErrorState";
-import { Loader } from "./components/Loader/Loader";
+import { Loader } from "../common/components/Loader/Loader";
 import { PartDetailUI } from "./components/PartDetailUI/PartDetailUI";
 import { useGetPartDetail } from "./hooks/useGetPartDetail";
 import { useParams, useSearchParams } from "next/navigation";
