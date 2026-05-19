@@ -2,6 +2,9 @@
 
 > Mi solución al desafío técnico de ingreso al equipo de Turboshop.
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/85cca9c3-51f5-47d0-94dc-261d78fb24ad" />
+
+
 ## Generalidades
 
 * La mayor parte del proyecto fue realizado integramente a mano.
