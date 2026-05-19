@@ -9,7 +9,7 @@ export class FilterBySearchTermStrategy implements FilterStrategy {
     }
 
     execute(part: Part): boolean {
-        return this.searchTerm.includes(part.title);
+        return  RegExp(`(${this.searchTerm})+`, 'i').test(part.title);
     }
 
 }

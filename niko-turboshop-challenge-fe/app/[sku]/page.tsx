@@ -20,7 +20,7 @@ export default function ItemPage() {
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <Navbar />
             <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                {partData && <PartDetailUI part={partData} />}
+                {partData && <PartDetailUI part={partData} provider={provider} />}
                 {isLoading && <Loader />}
                 {error && <ErrorState message="Ocurrió un error al cargar los detalles de la parte" title="Ha ocurrido un error" onRetry={() => retry()} />}
             </div>

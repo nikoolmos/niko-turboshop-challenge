@@ -2,10 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { PartDetail } from "../../interfaces/PartDetail";
-import { currencyFormatter } from "@/app/common/utils/currencyFormatter";
+import { RealTimePrice } from "@/app/common/components/RealTimePrice/RealTimePrice";
+import { RealTimeQuantity } from "@/app/common/components/RealTimeQuantity/RealTimeQuantity";
 
 export interface PartDetailUIProps {
     part: PartDetail;
+    provider: string;
 }
 
 const parentStyles: React.CSSProperties = {
@@ -36,7 +38,7 @@ const backStyles: React.CSSProperties = {
 
 
 export function PartDetailUI(props: PartDetailUIProps) {
-    const { part } = props;
+    const { part, provider } = props;
 
     const { push } = useRouter();
 
@@ -51,7 +53,7 @@ export function PartDetailUI(props: PartDetailUIProps) {
                     </span>
                 </a>
                 <h1 style={{ color: 'black', fontSize: '4rem', fontWeight: "bold" }}>{part.title}</h1>
-                <p style={{ color: 'grey',  fontStyle: 'italic'}}>SKU: {part.sku}</p>
+                <p style={{ color: 'grey', fontStyle: 'italic' }}>SKU: {part.sku}</p>
             </div>
             <div style={styles}>
                 <ul style={parentStyles}>
@@ -81,15 +83,15 @@ export function PartDetailUI(props: PartDetailUIProps) {
                     </li>
                     <li>
                         <b>PRECIO UNITARIO</b>
-                        <p>{currencyFormatter(part.unitPrice)}</p>
-                    </li>
-                    <li>
-                        <b>MONEDA</b>
-                        <p>{part.currencyCode}</p>
+                        <p>
+                            <RealTimePrice defaultValue={part.unitPrice} provider={provider} sku={part.sku} />
+                        </p>
                     </li>
                     <li>
                         <b>CANTIDAD DISPONIBLE</b>
-                        <p>{part.qtyAvailable}</p>
+                        <p>
+                            <RealTimeQuantity defaultValue={part.qtyAvailable} sku={part.sku} provider={provider} />
+                        </p>
                     </li>
                     <li>
                         <b>DEPÓSITO</b>

@@ -14,7 +14,7 @@ interface UseCatalogFilterConfig {
 }
 
 export default function useCatalogFilter(config: UseCatalogFilterConfig) {
-    const [searchTerm, setSearchTerm] = useState<string | undefined>();
+    const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
     const [selectedModels, setSelectedModels] = useState<string[]>([]);
     const [yearFrom, setYearFrom] = useState<string>('');
@@ -53,7 +53,7 @@ export default function useCatalogFilter(config: UseCatalogFilterConfig) {
         const filters = new Set<FilterStrategy>();
 
         if (isSearchByTermFilterActive) {
-            filters.add(new FilterBySearchTermStrategy(searchTerm!));
+            filters.add(new FilterBySearchTermStrategy(searchTerm));
         }
 
         if (isBrandFilterActive) {
@@ -72,6 +72,7 @@ export default function useCatalogFilter(config: UseCatalogFilterConfig) {
             filters.add(new FilterByYearUpTo(yearUpTo));
         }
 
+        console.log('filters', filters)
         return config?.catalog?.filter((part: Part) => {
             return filters.values().every(filter => filter.execute(part));
         });
@@ -83,6 +84,8 @@ export default function useCatalogFilter(config: UseCatalogFilterConfig) {
     const handleBrandsChange = (newBrands: string[]) => setSelectedBrands(newBrands);
     const handleYearFromChange = (newYearFrom: string) => setYearFrom(newYearFrom);
     const handleYearUpToChange = (newYearUpTo: string) => setYearUpTo(newYearUpTo);
+
+    console.log('FILTERED PARTS', filteredParts);
 
     return {
         filteredParts,
