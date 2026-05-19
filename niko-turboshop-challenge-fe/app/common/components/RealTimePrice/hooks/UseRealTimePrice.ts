@@ -7,13 +7,13 @@ export function UseRealTimePrice(id: string, provider: string) {
 
     useEffect(() => {
         const clearId = setInterval(() => {
-            // PriceService.getPrice(id, provider).then(priceObject => {
-            //     setPrice(priceObject.price);
-            // })
-            // .catch(error => {
-            //     setError(error);
-            //     console.error(error);
-            // })
+            PriceService.getPrice(id, provider).then(priceObject => {
+                setPrice(priceObject.price);
+            })
+            .catch(error => {
+                setError(error);
+                console.error(error);
+            })
         }, 3000);
 
         return () => {

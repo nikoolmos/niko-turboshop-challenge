@@ -3,6 +3,7 @@ import { Part } from "../../interfaces/part";
 import { currencyFormatter } from "@/app/common/utils/currencyFormatter";
 import { useRouter } from "next/navigation";
 import { RealTimePrice } from "@/app/common/components/RealTimePrice/RealTimePrice";
+import { RealTimeQuantity } from "@/app/common/components/RealTimeQuantity/RealTimeQuantity";
 interface PartListItemProps {
     part: Part
 }
@@ -58,7 +59,7 @@ const missingImageStyles: React.CSSProperties = {
 
 export function PartListItem(props: PartListItemProps) {
 
-    const {push} = useRouter();
+    const { push } = useRouter();
 
     const navigateToDetailsPage = () => {
         push(`${props.part.id}/?provider=${props.part.providers[0]}`);
@@ -91,7 +92,9 @@ export function PartListItem(props: PartListItemProps) {
                 <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
                     <RealTimePrice provider={props.part.providers[0]} sku={props.part.sku} defaultValue={props.part.price} />
                 </p>
-                <p style={{ fontStyle: 'italic' }}>{props.part.qty} unidades</p>
+                <p style={{ fontStyle: 'italic' }}>
+                    <RealTimeQuantity provider={props.part.providers[0]} sku={props.part.sku} defaultValue={props.part.qty} />&nbsp;unidades
+                </p>
             </div>
         </div>
     );
