@@ -38,12 +38,6 @@ export class PartRequestHandler {
         
         const pagesQty = Math.round(partsList.length / limitAsNumber);
         
-        console.log('TOTAL PAGES', pagesQty);
-        console.log('ARRAY LENGTH', partsList.length);
-        console.log('LIMIT', limitAsNumber);
-        console.log('SLICE START', sliceStart);
-        console.log('SLICE END', sliceEnd);
-        
         return {
             totalPages: pagesQty,
             currentPage: page,
